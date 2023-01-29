@@ -9,10 +9,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
 
-  const generateResponse = async () => {
-    const response = await axios.post('/api/gpt3', { prompt: 'hello' })
-    console.log(response.data)
-  }
+
 
 
   return (

@@ -43,11 +43,17 @@ export default async function handler(
 		top_p: 1,
 		frequency_penalty: 0,
 		presence_penalty: 0,
+
+		// temperature: 0.9,
+		// max_tokens: 150,
+		// top_p: 1,
+		// frequency_penalty: 0,
+		// presence_penalty: 0.6,
+		stop: [" Human:", " AI:"],
 	})
 
-	res.status(200).send({
-		bot:
-			response?.data?.choices?.[0]?.text ||
+
+	res.status(200).send(response?.data?.choices?.[0]?.text ||
 			'Opps, something went wrong. Try reloading the page',
-	})
+	)
 }

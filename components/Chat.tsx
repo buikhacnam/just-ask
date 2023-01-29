@@ -3,12 +3,27 @@ import axios from 'axios'
 import { Input, Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons';
 
+/*
+const response = await openai.createCompletion({
+  model: "text-davinci-003",
+  prompt: "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: nice talking to you\n Nice talking to you too! How may I assist you today?",
+  temperature: 0.9,
+  max_tokens: 150,
+  top_p: 1,
+  frequency_penalty: 0,
+  presence_penalty: 0.6,
+  stop: [" Human:", " AI:"],
+});
+
+*/
+
 interface ChatProps {}
 
 const Chat: React.FC<ChatProps> = ({}) => {
 	const [myMessage, setMyMessage] = React.useState<string>('')
-	const [messages, setMessages] = React.useState<string[]>([])
+	const [messages, setMessages] = React.useState<string[]>(['The following is a conversation with an AI. The assistant is helpful, creative, clever, and very friendly.'])
 	const [loading, setLoading] = React.useState<boolean>(false)
+
 
 	const messagesEndRef = useRef<any>(null)
 
@@ -18,19 +33,20 @@ const Chat: React.FC<ChatProps> = ({}) => {
 
 	const generateResponse = async () => {
 		scrollToBottom()
+		let newMessage =  '\n\nHuman: ' + myMessage 
+		setMyMessage('')
 		try {
-			setMyMessage('')
-			setMessages([...messages, myMessage])
+			setMessages([...messages, newMessage])
 			setLoading(true)
 			const response = await axios.post('/api/chat', {
-				prompt: myMessage,
+				prompt: messages.join(' ') + newMessage,
 			})
 			// console.log(response.data)
 			setMessages([
 				...messages,
-				myMessage,
-				`🤖 ${
-					response.data?.bot ||
+				newMessage,
+				`${
+					response.data ||
 					'Opps, something went wrong. Please try again'
 				}`,
 			])
