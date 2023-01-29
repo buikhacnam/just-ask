@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import axios from 'axios'
 import { Input, Spin } from 'antd'
-import styled from 'styled-components'
+import { LoadingOutlined } from '@ant-design/icons';
 
 interface ChatProps {}
 
@@ -29,7 +29,7 @@ const Chat: React.FC<ChatProps> = ({}) => {
 			setMessages([
 				...messages,
 				myMessage,
-				`🤖: ${
+				`🤖 ${
 					response.data?.bot ||
 					'Opps, something went wrong. Please try again'
 				}`,
@@ -59,13 +59,14 @@ const Chat: React.FC<ChatProps> = ({}) => {
 										? 'lightblue'
 										: 'lightgreen',
 								padding: '10px',
+                                borderRadius: '10px',
 							}}
 						>
 							{message}
 						</p>
 					)
 				})}
-				{loading && <Spin />}
+				{loading &&<LoadingOutlined style={{ fontSize: 24 }} spin />}
 				<div style={{ marginTop: 150 }} ref={messagesEndRef} />
 			</div>
 			<div style={{
@@ -81,6 +82,7 @@ const Chat: React.FC<ChatProps> = ({}) => {
                         width: '95%'
                     }}
                     type='text'
+                    about='chat'
 					size='large'
 					placeholder='Chat to me'
 					value={myMessage}
