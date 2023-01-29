@@ -29,8 +29,10 @@ const Chat: React.FC<ChatProps> = ({}) => {
 			setMessages([
 				...messages,
 				myMessage,
-				`🤖: ${response.data?.bot ||
-					'Opps, something went wrong. Please try again'}` ,
+				`🤖: ${
+					response.data?.bot ||
+					'Opps, something went wrong. Please try again'
+				}`,
 			])
 			setLoading(false)
 		} catch (error) {
@@ -40,12 +42,13 @@ const Chat: React.FC<ChatProps> = ({}) => {
 		scrollToBottom()
 	}
 	return (
-		<>
-			<div
-				style={{
-					position: 'relative',
-				}}
-			>
+		<div
+			style={{
+				position: 'relative',
+                height: '100%',
+			}}
+		>
+			<div>
 				{messages.map((message, index) => {
 					return (
 						<p
@@ -62,33 +65,32 @@ const Chat: React.FC<ChatProps> = ({}) => {
 						</p>
 					)
 				})}
+				{loading && <Spin />}
 				<div style={{ marginTop: 150 }} ref={messagesEndRef} />
-				<Bottom>
-					{loading && <Spin />}
-					<Input
-						style={{}}
-						size='large'
-						placeholder='Chat to me'
-						value={myMessage}
-						onChange={e => setMyMessage(e.target.value)}
-						onPressEnter={generateResponse}
-						disabled={loading}
-					/>
-				</Bottom>
 			</div>
-		</>
+			<div style={{
+                position: 'fixed',
+                bottom: 0,
+                width: '100%',
+                paddingBottom: '10px',
+                zIndex: 1,
+                background: 'white',
+            }}>
+				<Input
+					style={{
+                        width: '95%'
+                    }}
+					size='large'
+					placeholder='Chat to me'
+					value={myMessage}
+					onChange={e => setMyMessage(e.target.value)}
+					onPressEnter={generateResponse}
+					disabled={loading}
+				/>
+			</div>
+		</div>
 	)
 }
 export default Chat
 
-const Bottom = styled.div`
-	position: sticky;
-	bottom: 0;
-	width: 100%;
-	padding-bottom: 10px;
-	z-index: 1;
-	background: white;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`
+

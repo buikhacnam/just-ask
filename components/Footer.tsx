@@ -8,8 +8,8 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({}) => {
     return <Wrapper>
         <h3>🤖 Just ask!</h3>
-        <p>Made with ❤️ by <a href="https://buinam.com">Casey Bui</a></p>
         <span>Beta version - response is limited to 400 characters</span>
+        <p>Made with ❤️ by <a href="https://buinam.com">Casey Bui</a></p>
 
     </Wrapper>
 }
