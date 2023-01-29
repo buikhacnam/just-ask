@@ -80,6 +80,7 @@ const Chat: React.FC<ChatProps> = ({}) => {
 					style={{
                         width: '95%'
                     }}
+                    type='text'
 					size='large'
 					placeholder='Chat to me'
 					value={myMessage}
