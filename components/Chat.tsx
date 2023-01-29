@@ -33,7 +33,7 @@ const Chat: React.FC<ChatProps> = ({}) => {
 
 	const generateResponse = async () => {
 		scrollToBottom()
-		let newMessage =  '\n\nHuman: ' + myMessage 
+		let newMessage =  '\n\nHuman: ' + myMessage + '\n'
 		setMyMessage('')
 		try {
 			setMessages([...messages, newMessage])
