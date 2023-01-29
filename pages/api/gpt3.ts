@@ -32,9 +32,7 @@ export default async function handler(
 ) {
 
     //get prompt from body
-    console.log("REQ ", req)
     const prompt = req.body?.prompt
-    console.log("PROMPTTTTTTTTTTTTTTT ", prompt)
 
 
 	const response = await openai.createCompletion({
