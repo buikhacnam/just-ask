@@ -89,6 +89,7 @@ const Chat: React.FC<ChatProps> = ({}) => {
                 position: 'fixed',
                 bottom: 0,
                 width: '100%',
+				maxWidth: '650px',
                 paddingBottom: '10px',
                 zIndex: 1,
                 background: 'white',

@@ -1,0 +1,8 @@
+/* max with of body should be like 600px and in the center of sceen */
+/* do this when the sceen is bigger than 600px */
+@media (min-width: 600px) {
+  body {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
