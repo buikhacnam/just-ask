@@ -11,7 +11,7 @@ const Chat: React.FC<ChatProps> = ({}) => {
 		'The following is a conversation with an AI. The assistant is helpful, creative, clever, and very friendly.',
 	])
 	const [loading, setLoading] = React.useState<boolean>(false)
-	const [visible, setVisible] = React.useState<boolean>(false)
+	const [visible, setVisible] = React.useState<boolean>(true)
 	const [apiKey, setApiKey] = React.useState<string>('')
 
 	const messagesEndRef = useRef<any>(null)
