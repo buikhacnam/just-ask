@@ -1,59 +1,44 @@
-/* 
-const { Configuration, OpenAIApi } = require("openai");
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
-
-const response = await openai.createCompletion({
-  model: "text-davinci-003",
-  prompt: "Hello sir how are you today? I am very happy to see you here\n\nThat's great to hear! How can I help you?",
-  temperature: 0,
-  max_tokens: 60,
-  top_p: 1,
-  frequency_penalty: 0,
-  presence_penalty: 0,
-});
-*/
-
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Configuration, OpenAIApi } from 'openai'
 
-const configuration = new Configuration({
-	apiKey: process.env.OPENAI_API_KEY,
-})
-const openai = new OpenAIApi(configuration)
-
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<any>
+	res: NextApiResponse
 ) {
+	try {
+		const { apiKey } = req.body
 
-    //get prompt from body
-    const prompt = req.body?.prompt
+		const configuration = new Configuration({
+			apiKey: apiKey,
+		})
+		const openai = new OpenAIApi(configuration)
 
+		const prompt = req.body?.prompt
 
-	const response = await openai.createCompletion({
-		model: 'text-davinci-003',
-		prompt,
-		temperature: 0,
-		max_tokens: 100,
-		top_p: 1,
-		frequency_penalty: 0,
-		presence_penalty: 0,
+		const response = await openai.createCompletion({
+			model: 'text-davinci-003',
+			prompt,
+			temperature: 0.9,
+			max_tokens: 150,
+			top_p: 1,
+			frequency_penalty: 0,
+			presence_penalty: 0.6,
+			stop: [' Human:', ' AI:'],
+		})
 
-		// temperature: 0.9,
-		// max_tokens: 150,
-		// top_p: 1,
-		// frequency_penalty: 0,
-		// presence_penalty: 0.6,
-		stop: [" Human:", " AI:"],
-	})
-
-
-	res.status(200).send(response?.data?.choices?.[0]?.text ||
-			'Opps, something went wrong. Try reloading the page',
-	)
+		return res
+			.status(200)
+			.send(
+				response?.data?.choices?.[0]?.text ||
+					'Opps, something went wrong'
+			)
+	} catch (error:any) {
+		// check if error is 401
+		if (error?.response?.status === 401) {
+			return res.status(401).send('Invalid API Key')
+		}
+		return res
+			.status(500)
+			.send('Opps, something went wrong')
+	}
 }
